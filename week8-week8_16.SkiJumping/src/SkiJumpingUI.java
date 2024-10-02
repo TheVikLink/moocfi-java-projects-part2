@@ -32,6 +32,7 @@ public class SkiJumpingUI {
         int round = 1;
         while (jumpOrQuit()) {
             newRound(round);
+            round++;
         }
         exitPanel();
     }
@@ -42,12 +43,16 @@ public class SkiJumpingUI {
     }
 
     public void printRoundNumberAndJumpingOrder(int round) {
-        System.out.println("Round " + round + "\n"
+        sortJumpers();
+        System.out.print("Round " + round + "\n"
                 + "\n"
                 + "Jumping order:\n");
         for (Jumper jumper : jumpers) {
-            System.out.println(jumper.toString());
+            System.out.print("  " + (jumpers.indexOf(jumper) + 1) + ". ");
+            System.out.print(jumper.toString() + "\n");
+
         }
+        System.out.print("\nResults of round " + round + "\n");
     }
 
     public void updateJumper(Jumper jumper, int jumpLength, ArrayList<Integer> judgeVotes) {
@@ -56,15 +61,14 @@ public class SkiJumpingUI {
     }
 
     public void printJumperResults(Jumper jumper, int jumpLength, ArrayList<Integer> judgeVotes) {
-        System.out.println(" "
+        System.out.println("  "
                 + jumper.getName()
                 + "\n"
                 + "    length: "
                 + jumpLength
                 + "\n"
                 + "    judge votes: "
-                + judgeVotes
-                + "\n");
+                + judgeVotes);
     }
 
     public void printRoundResults(int round) {
@@ -79,23 +83,25 @@ public class SkiJumpingUI {
     }
 
     public void printExitStatement() {
-        System.out.println("Thanks!\n"
+        System.out.println("\nThanks!\n"
                 + "\n"
                 + "Tournament results:\n"
                 + "Position    Name");
     }
 
     public void printTournamentResults() {
-
+        sortJumpers();
+        Collections.reverse(jumpers);
         for (Jumper jumper : jumpers) {
-            System.out.print(jumpers.indexOf(jumper));
+            System.out.print(jumpers.indexOf(jumper) + 1);
             System.out.print("           "
                     + jumper.getName()
-                    + "("
+                    + " ("
                     + jumper.getPoints()
                     + " points)\n"
                     + "            jump lengths: "
-                    + jumper.printJumpLengths());
+                    + jumper.printJumpLengths()
+                    + "\n");
         }
     }
 
@@ -106,13 +112,12 @@ public class SkiJumpingUI {
     }
 
     public void exitPanel() {
-        sortJumpers();
         printExitStatement();
         printTournamentResults();
     }
 
     public boolean jumpOrQuit() {
-        System.out.print("Write \"jump\" to jump; otherwise you quit: ");
+        System.out.print("\nWrite \"jump\" to jump; otherwise you quit: ");
         if (this.reader.nextLine().equalsIgnoreCase("jump")) {
             System.out.println("");
             return true;
@@ -138,9 +143,8 @@ public class SkiJumpingUI {
 
     public int calculateJudgePoints(ArrayList<Integer> judgeVotes) {
         Collections.sort(judgeVotes);
-        judgeVotes.subList(1, judgeVotes.size());
         int judgePoints = 0;
-        for (Integer vote : judgeVotes.subList(1, judgeVotes.size())) {
+        for (Integer vote : judgeVotes.subList(1, judgeVotes.size() - 1)) {
             judgePoints += vote;
         }
         return judgePoints;
@@ -161,7 +165,6 @@ public class SkiJumpingUI {
             } else {
                 System.out.println("");
                 System.out.println("The tournament begins!");
-                System.out.println("");
                 break;
             }
         }
