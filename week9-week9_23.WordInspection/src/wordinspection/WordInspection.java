@@ -22,7 +22,8 @@ public class WordInspection {
 
     public WordInspection(File file) throws FileNotFoundException {
         this.file = file;
-        this.lines = new ArrayList<String>();
+        this.lines = new ArrayList<String>(); 
+        //Read the file once at construction to avoid repetitive code
         Scanner reader = new Scanner(file, "UTF-8");
         while (reader.hasNextLine()) {
             String currentLine = reader.nextLine();
