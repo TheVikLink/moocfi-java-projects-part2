@@ -2,18 +2,10 @@ package phonesearch.logic;
 
 import java.util.Scanner;
 
-// nextInt is normally exclusive of the top value,
-// so add 1 to make it inclusive
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author olehenrikvik
- */
+//The purpose of this class is to start the program by creating an instance of 
+//the class, then run start(). The program runs until the user input equals x. 
+//There are 7 input alternatives, each with their own method that runs when 
+//a respective input is matched.
 public class PhoneSearchUI {
 
     private final Scanner reader;
@@ -142,11 +134,12 @@ public class PhoneSearchUI {
             notFound();
         }
     }
-
+    
+    
     private void deletePersonalInformation() {
         System.out.print("whose information: ");
         String name = reader.nextLine();
-        Person toRemove = new Person("placeholder");
+        Person toRemove = new Person("placeholder"); //To avoid ConcurrentModificationException
         if (persons.personsContains(name)) {
             for (Person person : persons.getPersons()) {
                 if (person.getName().equals(name)) {

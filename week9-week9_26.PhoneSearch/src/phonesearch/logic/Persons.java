@@ -68,7 +68,7 @@ public class Persons {
 
     public String filteredSearchByKeyword(String keyword) {
         if (!keyword.isEmpty()) {
-            List<Person> matches = new ArrayList<Person>();
+            List<Person> matches = new ArrayList<Person>(); //Might be more than one match.
             for (Person person : persons) {
                 if (person.getName().contains(keyword) || person.getAddress().contains(keyword)) {
                     matches.add(person);
